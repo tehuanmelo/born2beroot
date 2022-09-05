@@ -4,7 +4,7 @@ You will create your first machine in VirtualBox (or UTM if you can’t use Virt
 under specific instructions. Then, at the end of this project, you will be able to set up
 your own operating system while implementing strict rules.
 
-## Installing Sudo
+# Installing Sudo
 Login as root
 ```bash
 $ su -
@@ -48,7 +48,7 @@ To list all the users run this command
 $ getent passwd
 ```
 
-## SSH
+# SSH
 
 ## Install openssh-server
 ```bash
@@ -64,7 +64,7 @@ $ ssh -v localhost
 $ dpkg -l | grep ssh
 ```
 
-## Adding Password complexity
+# Adding Password complexity
 
 ## Password age
 
