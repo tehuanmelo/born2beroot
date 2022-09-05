@@ -1,59 +1,73 @@
 # born2beroot
-## Installing Sudo
+
+## Step 1
+
+### Installing Sudo
+
 ```bash
-apt update
-apt install sudo
+#Login as root
+$ su -
+# Update apt
+$ apt update
+# Install sudo
+$ apt install sudo
 ```
-## Installing Vim
+
+### Adding user to sudo group
 ```bash
-apt install vim
+$ sudo usermod -aG [groupname] [username]
+# or
+$ sudo adduser [username] [groupname]
+# -a stands for (append) -G (groups)
 ```
-## Adding user
+
+### Creating the user42 group
 ```bash
-sudo adduser [username]
+# Now user has superpowers you can run sudo direct from the user
+$ sudo groupadd [groupname]
+# Than add the user to user42 group using the previous command
 ```
-The command will ask  few questions, only password is required.
-## Creating new group
+
+
+## Step 2
+
+### Adding Password complexity
+
+### Password age
 ```bash
-$ sudo group add [groupname]
+# Edit this file
+$ sudo vim /etc/login.defs
+# Change these lines
+# PASS_MAX_DAYS     30  - Expire date
+# PASS_MIN_DAYS     2   - Min days for changing
+# PASS_WARN_AGE     7   - Warning the user 7 days before expire
 ```
-## Adding users to a group
-```bash
-sudo usermod -aG [groupname] [username]
-```
--a stands for (append) -G (groups)
-## Adding Password complexity
-### Min password length
-To set minimum password length, edit /etc/pam.d/common-password file:
->make a copy of the file for safety
-```bash
-sudo cp /etc/pam.d/common-password /etc/pam.d/common-password.bak
-```
-Open the file
-```bash
-sudo vim /etc/pam.d/common-password
-```
-Add minlen=10 to the following line
-```bash
-password [success=2 default=ignore] pam_unix.so obscure yescrypt minlen=10
-```
+
 ### Password complexity
-First install password quality cheking library using the command
+
 ```bash
-$ sudo apt install libpan-pwquality
+# Install password quality cheking library
+$ sudo apt install libpam-pwquality
 ```
-Open the file
+
 ```bash
+# Open the file
 sudo vim /etc/pam.d/common-password
 ```
-Add the following commands to the end of the line
+
 ```bash
-password        requisite                       pam_pwquality.so retry=3 ucredit=-1 lcredit=-1 ocredit=-1 difok=7 reject_username
+# Add the following commands to the end of this line
+#
+password        requisite                       pam_pwquality.so retry=3 minlen=10 ucredit=-1 lcredit=-1 ocredit=-1 difok=7 reject_username enforce_for_root
+#
+# minlen=10  - Defines the minimum password length
+# lcredit=-1 - Define the minimun number of lower letters
+# ucredit=-1 - Define the minimun number of upper letters
+# dcredit=-1 - Define the minimun number of special characters
+# difok=7 - Prevent the user to use 7 characters from the former password
+# reject_username - Prevent for using the username into the password
+# enforce_for_root  - Apply the rules for the rootpa
 ```
->lcredit=-1 - Define the minimun number of lower letters <br>
-ucredit=-1 - Define the minimun number of upper letters<br>
-ocredit=-1 - Define the minimun number of special characters<br>
-difok=7 - Prevent the user to use 7 characters from the former password<br>
-reject_username - Prevent for using the username int the password
+
 
 
