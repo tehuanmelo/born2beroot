@@ -21,15 +21,36 @@ $ sudo adduser [username] [groupname]
 # -a stands for (append) -G (groups)
 ```
 
-### Creating the user42 group
+### Creating the new group
 ```bash
-# Now user has superpowers you can run sudo direct from the user
+# Now user has superpowers you can run sudo direct from the user and create the user42 group
 $ sudo groupadd [groupname]
 # Than add the user to user42 group using the previous command
 ```
+### Creating new user
+```bash
+$ adduser [username]
+```
 
-
+```bash
+# To list all the users run this command
+$ getent passwd
+```
 ## Step 2
+### SSH
+```bash
+# Install openssh-server
+$ sudo apt install openssh-server
+```
+```bash
+# Verify if openssh-server was installed
+$ ssh -V
+#or
+$ ssh -v localhost
+#or
+$ dpkg -l | grep ssh
+```
+## Step 3
 
 ### Adding Password complexity
 
@@ -55,9 +76,9 @@ $ sudo apt install libpam-pwquality
 sudo vim /etc/pam.d/common-password
 ```
 
+
 ```bash
 # Add the following commands to the end of this line
-#
 password        requisite                       pam_pwquality.so retry=3 minlen=10 ucredit=-1 lcredit=-1 ocredit=-1 difok=7 reject_username enforce_for_root
 #
 # minlen=10  - Defines the minimum password length
