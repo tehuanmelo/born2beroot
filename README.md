@@ -64,6 +64,57 @@ $ ssh -v localhost
 $ dpkg -l | grep ssh
 ```
 
+Verify the status of ssh
+```bash
+$ sudo systemctl status ssh
+``` 
+
+Getting the ip address
+```bash
+$ ip addr
+```
+
+## Changing the Port 22, and Disabling root ssh
+
+Edit this file **/etc/ssh/sshd_config**
+```bash
+$ sudo vi /etc/ssh/sshd_config
+```
+Search the entry Port 22 and change it
+```bash
+#Port22
+Port 4242
+```
+Search the entry #PermitRootLogin and change it
+```bash
+#PermitRootLogin prohibit-password
+PermitRootLogin no
+```
+
+## Conecting to the server
+
+```bash
+$ ssh [username]@[ip_address_of_the_server] -p 4242
+```
+
+# UFW
+Install ufw
+```bash
+$ sudo apt install ufw
+```
+Verifying UFW status
+```bash
+$ sudo ufw status
+```
+Allowing ssh conections
+```bash
+$ sudo ufw allow 4242
+```
+Enabling UFW
+```bash
+$ sudo ufw enable
+```
+
 # Adding Password complexity
 
 ## Password age
@@ -81,19 +132,15 @@ PASS_WARN_AGE     7   - Warning the user 7 days before expire
 
 ### Password complexity
 
-
 Install password quality cheking library
 ```bash
 $ sudo apt install libpam-pwquality
 ```
 
-
 Open the file
 ```bash
 sudo vim /etc/pam.d/common-password
 ```
-
-
 
 Add the following commands to the end of this line
 ```bash
