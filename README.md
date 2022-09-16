@@ -1,4 +1,4 @@
-# born2beroot
+    # born2beroot
 This project aims to introduce you to the wonderful world of virtualization.
 You will create your first machine in VirtualBox (or UTM if you can’t use VirtualBox)
 under specific instructions. Then, at the end of this project, you will be able to set up
@@ -28,6 +28,11 @@ $ sudo adduser [username] [groupname]
 ```
 >-a stands for (append) -G (groups)
 
+listing the user groups
+```bash
+$ groups [username]
+```
+
 
 ## Creating new group
 
@@ -36,6 +41,11 @@ Now user has superpowers you can run sudo direct from the user and create the us
 $ sudo groupadd [groupname]
 ```
 >Than add the user to user42 group using the previous command
+
+list all groups run this command
+```bash
+$ getent group
+```
 
 ## Creating new user
 
@@ -47,6 +57,8 @@ To list all the users run this command
 ```bash
 $ getent passwd
 ```
+
+chad
 
 # SSH
 
@@ -144,7 +156,7 @@ sudo vim /etc/pam.d/common-password
 
 Add the following commands to the end of this line
 ```bash
-password        requisite                       pam_pwquality.so retry=3 minlen=10 ucredit=-1 lcredit=-1 ocredit=-1 difok=7 reject_username enforce_for_root
+password        requisite                       pam_pwquality.so retry=3 minlen=10 ucredit=-1 lcredit=-1 ocredit=-1 difok=7 maxrepeat=3 reject_username enforce_for_root
 ```
 ```bash
 minlen=10  - Defines the minimum password length
@@ -152,6 +164,7 @@ lcredit=-1 - Define the minimun number of lower letters
 ucredit=-1 - Define the minimun number of upper letters
 dcredit=-1 - Define the minimun number of special characters
 difok=7 - Prevent the user to use 7 characters from the former password
+maxrepeat=3 - the maximum number of times a single character may be repeated
 reject_username - Prevent for using the username into the password
 enforce_for_root  - Apply the rules for the rootpa
 ```
