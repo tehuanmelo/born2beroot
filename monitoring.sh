@@ -11,6 +11,9 @@ DISKTOT=$(echo $DISKUSD $DISKFREE | awk '{printf"%d", $1 + $2}')
 CPULD=$(grep 'cpu ' /proc/stat | awk '{usage=($2+$4)*100/($2+$4+$5)} END {print usage}')
 if cat /etc/fstab | grep /dev/mapper >/dev/null; then LVM=$(echo yes); fi
 TCPCONNECTION=$(ss | grep 4242 | wc -l)
+IPADDR=$(hostname -I)
+MAC=$(ip addr | grep link/ether | awk '{print $2}')
+SUDO=$(cat /var/log/sudo/sudo.log | grep COMMAND | wc -l)
 
 echo -e "\t#Architecture: "`uname -a`
 echo -e "\t#CPU physical: "`nproc`
@@ -21,3 +24,6 @@ echo -e "\t#CPU load: "`echo $CPULD | awk '{printf"%.2f%%", $1}'`
 echo -e "\t#LAST boot: "`last reboot | head -1 | awk '{print $5,$6,$7,$8}'`
 echo -e "\t#LVM use: ${LVM}"
 echo -e "\t#Connections TCP: $TCPCONNECTION ESTABLISHED"
+echo -e "\t#User log: "`who | wc -l`
+echo -e "\t#Network: ${IPADDR} (${MAC})"
+echo -e "\t#Sudo: ${SUDO} cmd"
