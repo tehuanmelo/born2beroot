@@ -9,11 +9,15 @@ DISKUSD=$(df | awk '{SUM+=$3}END{print SUM / 1000000}' | awk '{printf"%.2f", $1}
 DISKFREE=$(df | awk '{SUM+=$4}END{print SUM / 1000000}' | awk '{printf"%.2f", $1}')
 DISKTOT=$(echo $DISKUSD $DISKFREE | awk '{printf"%d", $1 + $2}')
 CPULD=$(grep 'cpu ' /proc/stat | awk '{usage=($2+$4)*100/($2+$4+$5)} END {print usage}')
-if cat /etc/fstab | grep /dev/mapper >/dev/null; then LVM=$(echo yes); fi
+#if cat /etc/fstab | grep /dev/mapper >/dev/null; then LVM=$(echo yes); fi
+LVM=$(lsblk | grep lvm >/dev/null; then echo yes; fi)
 TCPCONNECTION=$(ss | grep 4242 | wc -l)
 IPADDR=$(hostname -I)
 MAC=$(ip addr | grep link/ether | awk '{print $2}')
-SUDO=$(cat /var/log/sudo/sudo.log | grep COMMAND | wc -l)
+#SUDO=$(cat /var/log/sudo/sudo.log | grep COMMAND | wc -l)
+SUDO=$(journalctl _COMM=sudo | grep COMMAND | wc -l)
+
+
 
 echo -e "\t#Architecture: "`uname -a`
 echo -e "\t#CPU physical: "`nproc`

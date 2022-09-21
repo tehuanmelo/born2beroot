@@ -1,4 +1,4 @@
-    # born2beroot
+# born2beroot
 This project aims to introduce you to the wonderful world of virtualization.
 You will create your first machine in VirtualBox (or UTM if you can’t use VirtualBox)
 under specific instructions. Then, at the end of this project, you will be able to set up
@@ -156,7 +156,7 @@ sudo vim /etc/pam.d/common-password
 
 Add the following commands to the end of this line
 ```bash
-password        requisite                       pam_pwquality.so retry=3 minlen=10 ucredit=-1 lcredit=-1 ocredit=-1 difok=7 maxrepeat=3 reject_username enforce_for_root
+password        requisite                       pam_pwquality.so retry=3 minlen=10 ucredit=-1 lcredit=-1 dcredit=-1 difok=7 maxrepeat=3 reject_username enforce_for_root
 ```
 ```bash
 minlen=10  - Defines the minimum password length
